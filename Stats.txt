@@ -1,0 +1,16 @@
+import java.io.File;
+
+public class Stats{
+  //properties
+  String name;
+  int wins;
+  int matches;
+  int streak;
+  int losess;
+
+  public Stats(String name){
+      this.name = name;
+  }
+ 
+  
+}
