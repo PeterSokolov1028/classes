@@ -1,4 +1,4 @@
- import java.io.File;
+import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -25,9 +25,6 @@ public class Tracker {
   }
 
   public Player getPlayer(String pName)throws FileNotFoundException{
-    
-
-    
     //Set the activePlayer propertie 
     //return the activePlayer
 
@@ -35,7 +32,6 @@ public class Tracker {
     String[] stats;
     File x = new File("Ledger.csv");
     Scanner scn = new Scanner(x);
-    System.out.println("?getPlayer --" + scn);
     while (scn.hasNextLine()) {
         String theNextLine = scn.nextLine();
       // find the player...
@@ -43,19 +39,21 @@ public class Tracker {
         if(stats[0].equals(pName)){
           // use that data from the scanner to construct player 
           this.activePlayer = new Player(stats);
+          return activePlayer;
+          
         }
-      return activePlayer;
+   
     }
  // find the player...
       
-    return new Player("?????" , 50);
+    return new    Player(pName,activePlayer.initialHp(activePlayer.getWins(pName)));
   }
   
     //Save file to big String and then write it back but include the stats that you want to update
   public int[] statGetter(String pName)throws FileNotFoundException{
       String[] stats;
       
-      int[] intStats = new int[4];
+      int[] intStats = new int[5];
       File x = new File("Ledger.csv");
       Scanner scn = new Scanner(x);
       while (scn.hasNextLine()) {
@@ -108,18 +106,10 @@ public class Tracker {
     System.out.println("Making the file...");
      
 
-    // Scanner s = new Scanner(f);
   }
-  /*public String[] statGetter(String pName){
-    String[] stats;
-    while (scn.hasNextLine()) {
-      if(stats[0] == pName){
-        
-      }
-      stats = scn.nextLine().split(",");
-      System.out.println(stats[0]);
-    }
-    return stats[];
+
+  public void initialHealth(){
+    
   }
-*/
+
 }
