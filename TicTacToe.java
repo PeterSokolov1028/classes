@@ -8,26 +8,39 @@ import java.util.Scanner;
 public class TicTacToe {
   /////////// Properties
   Player active;
-  
-  char activeSymbol = 'X';
-  char[][] state = {
-        { 'X', 'O', 'X' },
-        { '-', 'X', '-' },
-        { '-', '-', 'X' }
-  };
 
+  int size = 3;
+  char activeSymbol;
+  char[][] state2 = 
+    {
+        { '-', '-', '-' },
+        { '-', '-', '-' },
+        { '-', '-', '-' }
+    };
+  char[][] state = new char[size][size];
+  public char[] initializeState(char[][] state){
+    for(int i = 0; i < size; i++){
+      for(int j = 0; j < size; j++){
+        state[i][j] = '-';
+      }
+      
+    }
+    return state;
+  }
+
+  initializeState(state);
   
   // CONSTRUCTOR??????????????????
 
   public TicTacToe() {
-
     Grid g = new Grid(state);
 
-    System.out.println(winDiagonal());
+    System.out.println(winHorizontal() + "??");
 
     int turnCount = 1;
     while (win(state, turnCount) == false) {
       g.drawGrid();
+      
       makeaMove(state, turnCount);
       turnCount++;
       if (turnCount > 9)
@@ -49,65 +62,85 @@ public class TicTacToe {
       y = g.nextInt();
       x = g.nextInt();
     }
-    char p;
     if (turnCount % 2 == 0)
-      p = 'O';
+      activeSymbol = 'O';
     else {
-      p = 'X';
+      activeSymbol = 'X';
     }
-    state[x][y] = p;
+    state[x][y] = activeSymbol;
     // if(win(state) == false )makeaMove(state);
 
   }
 
-  public boolean win(char[][] state, int turnCount) {
-    // if win true
-    // if Horizontal equal to active player win
 
-    char active;
-    if (turnCount % 2 == 1)
-      active = 'X';
-    else {
-      active = 'O';
-    }
-    for (int j = 0; j < state.length; j++) {
-
-      boolean possibleWinner = true;
-
-      for (int i = 0; i < state[j].length; i++) {
-        char found = state[j][i];
-        if (found != active) {
-          possibleWinner = false;
-          break;
-        }
-      }
-
-      return possibleWinner;
-    }
-    // if vertical of active player equals - win
-    for (int j = 0; j < state.length; j++) {
-
-      boolean possibleWinner = true;
-
-      for (int i = 0; i < state[j].length; i++) {
-        char found = state[i][j];
-        if (found != active) {
-          possibleWinner = false;
-          break;
-        }
-      }
-
-      return possibleWinner;
-    }
+  public boolean win(char[][] state, int turnCount){
+    
+    if(winVertical()) return true;
+    if(winHorizontal()) return true;
+    if(winDiagonal()) return true;
+    
     return false;
   }
+  
+ 
+  //Horizontal winner
+   public boolean winHorizontal(){
+    // check to see if we can win.
+    // as soon as we cannot win, we exit.
+
+    // must check every column before we can know if we cannot win.
+    boolean canWin;
+    for(int x = 0; x < state.length; x++){
+      canWin = true;
+        for(int y = 0; y < state.length; y++){
+          if(activeSymbol != state[x][y]){
+            
+            canWin = false;
+            break;
+          }
+        }
+      if(canWin) return true;
+
+    }
+    return false;
+      
+    }
+  //Vertical winner
+  public boolean winVertical(){
+    // check to see if we can win.
+    // as soon as we cannot win, we exit.
+
+    // must check every column before we can know if we cannot win.
+    boolean canWin;
+    for(int x = 0; x < state.length; x++){
+      canWin = true;
+        for(int y = 0; y < state.length; y++){
+          if(activeSymbol != state[y][x]){
+            canWin = false;
+            break;
+          }
+        }
+      if(canWin) return true;
+
+    }
+    return false;
+      
+    }
 
   // if all diogonal of active player equals - win.
   public boolean winDiagonal() {
-
-    if(state[1][1] != activeSymbol) return false;
-    return false;
-
+    //checking the first diagonal
+    boolean possibleWinner = true;
+    //Checking first diagonal
+    for(int  i = 0; i < state.length;i++){
+      if(activeSymbol != state[i][i]) possibleWinner = false;
+      //Checking if the far diagonal is true
+      if(activeSymbol != state[state.length-(i+1)][i] && !possibleWinner) return false;  
+    }
+   
+   
+    
+    
+    return true;
   }
-
 }
