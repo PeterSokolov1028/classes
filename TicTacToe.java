@@ -18,12 +18,7 @@ public class TicTacToe {
   };
   char[][] state = new char[size][size];
 
-<<<<<<< HEAD
-=======
-  
-  initializeState(state);
-  
->>>>>>> origin/main
+
   // CONSTRUCTOR??????????????????
 
   public TicTacToe() {
